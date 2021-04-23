@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
     <Header />
-      <h1>Hello you yall to my instagran clone 🚀 !</h1>
+      <h1>Hello you y'all to my instagran clone 🚀 !</h1>
       <Post />
     </div>
   );
