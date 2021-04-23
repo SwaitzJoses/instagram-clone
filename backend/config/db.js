@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose" 
 
 
 const connectDB = async () => {
@@ -8,7 +8,8 @@ const connectDB = async () => {
             useNewUrlParser: true,
             useCreateIndex: true
         })
-        console.log(`MongoDB Connected: ${conn.connection.host}`.green.inverse)          
+        console.log(`INSTAGRAM:`.red) 
+        console.log(`MongoDB Connected: ${conn.connection.host}`.yellow)          
     } 
     catch(error) {
         console.log(`Error: ${error.message}`.red.underline.bold)
