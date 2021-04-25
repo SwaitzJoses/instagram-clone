@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
+import Post from "../models/postModel.js";
 import asyncHandler from "express-async-handler";
 import colors from "colors";
 
@@ -18,6 +19,9 @@ const protect = asyncHandler(async (req, res, next) => {
 
       req.user = await User.findById(decoded.id).select("-password");
       console.log(req.user);
+
+      // req.post = await Post.find({})
+
       next();
     } catch (error) {
       console.error(error);
