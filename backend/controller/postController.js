@@ -55,7 +55,7 @@ const createComment = asyncHandler(async (req, res) => {
 
 
 // @desc    delete Comment
-//Route : POST localhost/5000/post/:post/:comment_id
+//Route : POST localhost/5000/post/:post/:comment
 // @access  Private
 const deleteComment = asyncHandler(async (req, res) => {
     
@@ -75,7 +75,7 @@ const deleteComment = asyncHandler(async (req, res) => {
 
 
 // @desc    add Like
-//Route : POST localhost/5000/post/:post
+//Route : PUT localhost/5000/post/:post
 // @access  Private
 const createLike = asyncHandler(async (req, res) => {
  
@@ -102,19 +102,26 @@ const createLike = asyncHandler(async (req, res) => {
 
 
 // @desc    delete Like
-//Route : DELETE localhost/5000/post/like
+//Route : PUT localhost/5000/post/:post/:like
 // @access  Private
 const deleteLike = asyncHandler(async (req, res) => {
     
   
-  const post = await Post.findById("6085b7aa80ce9712a00d46e3");
-      //   post.comment.remove("6084bb28ed407260b8630db3")
-  
-//  console.log(post)
-    const filtered = post.like.filter(c=> c._id != "608609d0e4c3882b84101b82");
-    // console.log((filtered))
-   post.like.pop(filtered);
-   
+  const post = await Post.findById(req.params.post);
+    
+  const like = req.params.like
+
+
+  //  if(post.like.find(l => l.user.toString() === req.user._id.toString())){
+
+     const ind = post.like.map(ll => ll._id.toString()).indexOf(like);
+    post.like.splice(ind,1);
+
+  // }
+  // else 
+  // {
+  //    res.send("unauthorized")
+  // }
 
   await post.save();
   res.status(201).json({ post });
