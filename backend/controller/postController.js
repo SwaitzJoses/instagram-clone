@@ -74,23 +74,27 @@ const deleteComment = asyncHandler(async (req, res) => {
   });
 
 
-  // @desc    add Like
-//Route : PUT localhost/5000/post/like
+// @desc    add Like
+//Route : POST localhost/5000/post/:post
 // @access  Private
 const createLike = asyncHandler(async (req, res) => {
-  
+ 
 
-  const post = await Post.findById("6085b7aa80ce9712a00d46e3");
+  const post = await Post.findById(req.params.post);
 
   const postLike = {
     name: req.user.name,
-  
     user: req.user._id,
-    // createdAt: Date.now(),
-    // post:req.post._id,
   };
 
-  post.like.push(postLike);
+  if(post.like.find(l => l.user.toString() === req.user._id.toString())){
+    res.send("already liked")
+  }
+  else 
+  {
+    post.like.push(postLike);
+  }
+  
 
   await post.save();
   res.status(201).json({ message: "Like added" });
