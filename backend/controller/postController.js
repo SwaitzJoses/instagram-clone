@@ -32,12 +32,12 @@ const getPost = asyncHandler(async (req, res) => {
 });
 
 // @desc    add Comment
-//Route : POST localhost/5000/post/comment
+//Route : POST localhost/5000/post/:post
 // @access  Private
 const createComment = asyncHandler(async (req, res) => {
   const { comment } = req.body;
 
-  const post = await Post.findById("6085b7aa80ce9712a00d46e3");
+  const post = await Post.findById(req.params.post);
 
   const postComment = {
     name: req.user.name,
@@ -55,18 +55,18 @@ const createComment = asyncHandler(async (req, res) => {
 
 
 // @desc    delete Comment
-//Route : POST localhost/5000/post/comment
+//Route : POST localhost/5000/post/:post/:comment_id
 // @access  Private
 const deleteComment = asyncHandler(async (req, res) => {
     
   
-    const post = await Post.findById("6085b7aa80ce9712a00d46e3");
-        //   post.comment.remove("6084bb28ed407260b8630db3")
-    
-  //  console.log(post)
-      const filtered = post.comment.filter(c=> c._id != "6085c206d481aa648c688f1a");
-      console.log((filtered))
-     post.comment.pop(filtered);
+    const post = await Post.findById(req.params.post);
+        
+        const com = req.params.comment
+ 
+      const index = post.comment.map(c=> c._id.toString()).indexOf(com);
+      
+      post.comment.splice(index,1)
      
   
     await post.save();

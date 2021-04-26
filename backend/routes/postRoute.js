@@ -5,7 +5,9 @@ import {protect} from "../middleware/authMiddleware.js";
 
 router.route("/create").post(protect, createPost)
 router.route("/allposts").get(getPost)
-router.route("/comment").post(protect, createComment).delete(protect, deleteComment)
+router.route("/:post").post(protect, createComment)
+router.route("/:post/:comment").delete(protect, deleteComment)
+
 router.route("/like").put(protect, createLike).delete(protect, deleteLike)
 
 export default router; 
